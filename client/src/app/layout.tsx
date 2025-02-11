@@ -35,7 +35,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <div className="">
+          <div className="bg-zinc-200 dark:bg-slate-950">
             {children}
           </div>
           <Footer />
