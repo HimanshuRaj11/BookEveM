@@ -1,4 +1,3 @@
-import { CalendarForm } from "@/components/calender";
 import TopBanquets from "@/components/TopBanquets";
 import Image from "next/image";
 
@@ -20,7 +19,6 @@ export default function Home() {
                 aria-describedby="button-addon3" />
 
             </div>
-            <CalendarForm />
 
           </div>
         </div>
