@@ -1,11 +1,28 @@
 "use client"
 import { CarouselPlugin } from '@/components/ImagesCrousel'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // import { FaPhone, FaMapMarkerAlt, FaClock, FaDirections, FaCopy, FaEdit, FaEnvelope, FaSms, FaShareAlt, FaStar } from "react-icons/fa";
-
+import { TopBanquetsList } from "../../../../Data/Banquet"
 import { FaPhone, FaStar, FaCheckCircle, FaMapMarkerAlt, FaParking, FaShareAlt, FaEdit, FaDirections, FaCopy, FaClock, FaEnvelope, FaSms } from "react-icons/fa";
 import { BsWhatsapp } from "react-icons/bs";
 
+
+interface Banquet {
+    _id: number;
+    Name: string;
+    Discription: string;
+    Image: string;
+    ImageList: string[];
+    rating: number;
+    contactNumber: string;
+    WhatsappNumber: string;
+    isVerified: boolean;
+    Location: string;
+    Minprice: number;
+    MaxPrice: number;
+    Email: string;
+    IsParking: boolean;
+}
 function page({ params }: { params: any }) {
 
     const BanquetImg = [
@@ -13,6 +30,12 @@ function page({ params }: { params: any }) {
     ]
 
     const Banquet_id = params.banquet_id
+    const [BanquetData, setBanquetData] = useState<Banquet>();
+
+    useEffect(() => {
+        const FilterBanquetData = TopBanquetsList.find(item => item._id == Banquet_id)
+        setBanquetData(FilterBanquetData);
+    }, [])
 
     return (
         <div className='flex justify-center items-center flex-col'>
@@ -23,7 +46,7 @@ function page({ params }: { params: any }) {
 
                 <div className="shadow-lg rounded-lg p-4 flex flex-col w-full border">
                     <div className="flex items-center space-x-2">
-                        <h2 className="text-lg font-semibold">The Toy Hotel</h2>
+                        <h2 className="text-lg font-semibold">{BanquetData?.Name} </h2>
                         <span className="flex items-center text-green-600 font-bold bg-green-100 px-2 py-1 rounded-lg text-sm">
                             4.2 <FaStar className="ml-1 text-yellow-500" />
                         </span>
@@ -33,15 +56,18 @@ function page({ params }: { params: any }) {
 
                     <div className="text-gray-600 text-sm flex items-center space-x-2 mt-2">
                         <FaMapMarkerAlt />
-                        <span>Chandigarh Sector 34b, Chandigarh</span>
+                        <span> {BanquetData?.Location}</span>
                         <span className="text-green-600">• Open until 11:00 pm</span>
                         <span>• 16 Years in Business</span>
-                        <span className="flex items-center text-red-600">• <FaParking className="ml-1" /> Parking Available</span>
+                        {
+                            BanquetData?.IsParking &&
+                            <span className="flex items-center text-red-600">• <FaParking className="ml-1" /> Parking Available</span>
+                        }
                     </div>
 
                     <div className="flex space-x-3 mt-4">
                         <button className="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
-                            <FaPhone className="mr-2" /> 09036682665
+                            <FaPhone className="mr-2" /> {BanquetData?.contactNumber}
                         </button>
                         <button className="flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md">
                             Check Availability
@@ -76,14 +102,14 @@ function page({ params }: { params: any }) {
                     <div className="p-4 w-full">
                         <h2 className="text-lg font-semibold">Contact</h2>
                         <div className="flex items-center text-blue-600 font-semibold mt-2">
-                            <FaPhone className="mr-2" /> 09036682665
+                            <FaPhone className="mr-2" /> {BanquetData?.WhatsappNumber}
                         </div>
 
                         <hr className="my-3" />
 
                         <h2 className="text-lg font-semibold">Address</h2>
                         <p className="text-gray-600 text-sm mt-2">
-                            The Toy Hotel, Sco 165 to 167, Sector 34 A, Sector 34, Sector 34, Chandigarh Sector 34b, Chandigarh - 160022 (Near Shyam Fashion Mall)
+                            {BanquetData?.Location}
                         </p>
 
                         <div className="flex space-x-4 mt-3">
