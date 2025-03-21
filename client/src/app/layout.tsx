@@ -4,6 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import React from 'react';
+
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +38,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
+          <ToastContainer />
+
           <div className="bg-zinc-200 dark:bg-slate-950">
             {children}
           </div>

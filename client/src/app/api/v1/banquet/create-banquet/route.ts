@@ -7,45 +7,42 @@ export async function POST(request: Request) {
     try {
         await connectDB();
 
-        const { InputData } = await request.json()
+        const { Inputdata, Files } = await request.json()
         const { Name,
             Description,
             rating,
             contactNumber,
-            WhatsappNumber,
-            isVerified,
-            Location,
-            Minprice,
+            MinPrice,
             MaxPrice,
-            Email,
-            IsParking } = InputData
-        // const { Image } = await request.json()
+            State,
+            City,
+            Pincode,
+            Landmark,
+        } = Inputdata
 
-        // const uploadResponse = await Promise.all(Image?.map((file: string) =>
-        //     cloudinary.uploader.upload(file, {
-        //         resource_type: "auto",
-        //         folder: 'BookEveM-Banquets',
-        //     })
-        // ));
+        const uploadResponse = await Promise.all(Files?.map((file: string) =>
+            cloudinary.uploader.upload(file, {
+                resource_type: "auto",
+                folder: 'BookEveM-Banquets',
+            })
+        ));
 
         const data = await Banquet.create({
             Name,
             Description,
-            // Image,
+            Image: uploadResponse,
             rating,
             contactNumber,
-            WhatsappNumber,
-            isVerified,
-            Location,
-            Minprice,
+            State,
+            City,
+            Pincode,
+            Landmark,
+            MinPrice,
             MaxPrice,
-            Email,
-            IsParking,
         })
 
-        return NextResponse.json({ message: "Data", data })
+        return NextResponse.json({ message: "Your Banquet Added Successfull", success: true }, { status: 201 })
     } catch (error) {
-        console.log(error);
-        return NextResponse.json({ message: error as Error })
+        return NextResponse.json({ message: error as Error, error: true }, { status: 503 })
     }
 }
