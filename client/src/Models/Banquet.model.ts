@@ -22,6 +22,7 @@ export interface Ifile {
 }
 
 interface IBanquet extends Document {
+    Owner: mongoose.Schema.Types.ObjectId;
     Name: string;
     Description: string;
     Image?: Ifile[];
@@ -31,7 +32,7 @@ interface IBanquet extends Document {
     isVerified: boolean;
     State: string;
     City: string;
-    Pincode: string;
+    PinCode: string;
     Landmark: string;
     Address: string;
     MinPrice: number;
@@ -39,7 +40,7 @@ interface IBanquet extends Document {
     Email: string;
     IsParking: boolean;
 }
-const file = {
+export const file = {
     asset_id: { type: String, },
     public_id: { type: String, },
     version: { type: Number, },
@@ -61,6 +62,7 @@ const file = {
 }
 
 const BanquetSchema: Schema<IBanquet> = new Schema({
+    Owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
     Name: { type: String, },
     Description: { type: String, },
     Image: [file],
@@ -70,7 +72,7 @@ const BanquetSchema: Schema<IBanquet> = new Schema({
     isVerified: { type: Boolean, },
     State: { type: String, },
     City: { type: String, },
-    Pincode: { type: String, },
+    PinCode: { type: String, },
     Landmark: { type: String, },
     Address: { type: String, },
     MinPrice: { type: Number, },

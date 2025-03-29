@@ -17,7 +17,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 function Page() {
     const [loading, setLoading] = useState(false)
     const [Files, setFiles] = useState<string[]>([])
-    const [Inputdata, setInputData] = useState({
+    const initialInputData = {
         Name: "",
         Description: "",
         contactNumber: "",
@@ -28,7 +28,8 @@ function Page() {
         Landmark: "",
         MinPrice: "",
         MaxPrice: "",
-    })
+    }
+    const [InputData, setInputData] = useState(initialInputData)
 
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,21 +55,10 @@ function Page() {
         setLoading(true)
         e.preventDefault();
         try {
-            const { data } = await axios.post(`${baseUrl}/api/v1/banquet/create-banquet`, { Inputdata, Files })
+            const { data } = await axios.post(`${baseUrl}/api/v1/banquet/create-banquet`, { InputData, Files })
             if (data.success) {
                 toast.success(data.message)
-                setInputData({
-                    Name: "",
-                    Description: "",
-                    contactNumber: "",
-                    State: "",
-                    City: "",
-                    Address: "",
-                    PinCode: "",
-                    Landmark: "",
-                    MinPrice: "",
-                    MaxPrice: "",
-                })
+                setInputData(initialInputData)
             }
             setLoading(false)
         } catch (error) {
@@ -194,8 +184,8 @@ function Page() {
                 <div className="flex-col md:flex-row w-full flex justify-between">
 
                     <div className="mb-4 w-full md:w-[48%]">
-                        <label className="block  text-sm font-bold mb-2" htmlFor="Pincode">Pincode</label>
-                        <input name='PinCode' className="bg-light shadow appearance-none border rounded w-full  py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline" id="Pincode" type="text" placeholder="Enter Pincode" onChange={handleInputChange} />
+                        <label className="block  text-sm font-bold mb-2" htmlFor="PinCode">PinCode</label>
+                        <input name='PinCode' className="bg-light shadow appearance-none border rounded w-full  py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline" id="PinCode" type="text" placeholder="Enter PinCode" onChange={handleInputChange} />
                     </div>
                     <div className="mb-4 w-full md:w-[48%]">
                         <label className="block  text-sm font-bold mb-2" htmlFor="landmark">Landmark</label>

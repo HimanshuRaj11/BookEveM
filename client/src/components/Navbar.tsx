@@ -1,15 +1,25 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { ModeToggle } from './themeToggler';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { FetchUser } from '@/app/Redux/Slice/User.slice';
 
 export default function Navbar() {
+    const dispatch = useDispatch()
+
     const [isOpen, setIsOpen] = useState(false);
+    const { User: { user } } = useSelector((state: any) => state.User);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
+    useEffect(() => {
+        dispatch(FetchUser() as any)
+
+    }, [])
 
     return (
 
@@ -41,6 +51,16 @@ export default function Navbar() {
                         <li>
                             <Link href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</Link>
                         </li>
+                        {
+                            user ?
+                                <li>
+                                    <Link href="/account" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Account</Link>
+                                </li>
+                                :
+                                <li>
+                                    <Link href="/auth" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</Link>
+                                </li>
+                        }
                     </ul>
                 </div>
                 <div className=""><ModeToggle /></div>

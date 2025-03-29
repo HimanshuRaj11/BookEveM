@@ -1,7 +1,12 @@
+"use client"
 import TopBanquets from "@/components/TopBanquets";
-import Image from "next/image";
+import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { FetchUser } from "./Redux/Slice/User.slice";
 
 export default function Home() {
+
   return (
     <div className="">
       <div
