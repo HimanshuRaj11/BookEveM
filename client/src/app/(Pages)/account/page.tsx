@@ -22,7 +22,7 @@ const Page = () => {
                 <h1 className="text-2xl font-semibold text-center text-gray-100">User Profile</h1>
                 <div className="mt-4">
                     <img
-                        src="/path/to/profile-pic.jpg"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo57VS7U3vDIVSz8kIP-_4u4YW-gIvj4G6Sg&s"
                         alt="Profile Picture"
                         className="w-24 h-24 rounded-full mx-auto"
                     />
