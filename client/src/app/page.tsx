@@ -1,9 +1,5 @@
-"use client"
 import TopBanquets from "@/components/TopBanquets";
-import axios from "axios";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { FetchUser } from "./Redux/Slice/User.slice";
+
 
 export default function Home() {
 

@@ -52,13 +52,14 @@ function Page() {
     }
 
     const OnSubmit = async (e: any) => {
+        console.log(InputData);
+
         setLoading(true)
         e.preventDefault();
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/banquet/create-banquet`, { InputData, Files })
             if (data.success) {
                 toast.success(data.message)
-                setInputData(initialInputData)
             }
             setLoading(false)
         } catch (error) {

@@ -26,6 +26,7 @@ export async function POST(request: Request) {
             Landmark,
         } = InputData
 
+
         const uploadResponse = await Promise.all(Files?.map((file: string) =>
             cloudinary.uploader.upload(file, {
                 resource_type: "auto",
@@ -47,8 +48,6 @@ export async function POST(request: Request) {
             MinPrice,
             MaxPrice,
         }).then(async (data) => {
-            console.log(data);
-
             await UserModel.findOneAndUpdate({ _id: User_id }, {
                 $push: { banquets: data._id }
             })

@@ -1,41 +1,48 @@
 "use client"
 import { CarouselPlugin } from '@/components/ImagesCrousel'
 import React, { useEffect, useState } from 'react'
-// import { FaPhone, FaMapMarkerAlt, FaClock, FaDirections, FaCopy, FaEdit, FaEnvelope, FaSms, FaShareAlt, FaStar } from "react-icons/fa";
 import { TopBanquetsList } from "../../../../Data/Banquet"
 import { FaPhone, FaStar, FaCheckCircle, FaMapMarkerAlt, FaParking, FaShareAlt, FaEdit, FaDirections, FaCopy, FaClock, FaEnvelope, FaSms } from "react-icons/fa";
 import { BsWhatsapp } from "react-icons/bs";
-
+import axios from 'axios';
 
 interface Banquet {
     _id: number;
     Name: string;
-    Discription: string;
-    Image: string;
-    ImageList: string[];
+    Description: string;
+    Image: any;
     rating: number;
     contactNumber: string;
     WhatsappNumber: string;
     isVerified: boolean;
     Location: string;
-    Minprice: number;
+    MinPrice: number;
     MaxPrice: number;
     Email: string;
     IsParking: boolean;
 }
-function page({ params }: { params: any }) {
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
+const Page = ({ params }: { params: any }) => {
     const BanquetImg = [
         "/banquet2.jpg", "/banquet3.jpg", "/banquet4.jpg", "/banquet5.jpg", "/banquet6.jpg"
     ]
 
     const Banquet_id = params.banquet_id
-    const [BanquetData, setBanquetData] = useState<Banquet>();
+    const [BanquetData, setBanquetData] = useState<Banquet | null>(null);
+
+    const fetchBanquet = async () => {
+        try {
+            const { data } = await axios.get(`${baseUrl}/api/v1/banquet/fetch/${Banquet_id}`)
+            setBanquetData(data.banquet)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
-        const FilterBanquetData = TopBanquetsList.find(item => item._id == Banquet_id)
-        setBanquetData(FilterBanquetData);
-    }, [])
+        fetchBanquet();
+    }, [Banquet_id])
 
     return (
         <div className='flex justify-center items-center flex-col'>
@@ -92,7 +99,6 @@ function page({ params }: { params: any }) {
 
             </div>
 
-
             <div className=" w-[90%] flex flex-row h-full justify-between items-center my-2 ">
                 <div className="rounded-lg border h-full bg-white dark:bg-gray-900 w-[70%]">
                     heloo
@@ -145,12 +151,10 @@ function page({ params }: { params: any }) {
                             <FaStar className="mr-2" /> Tap to rate
                         </button>
                     </div>
-
-
                 </div>
             </div>
         </div>
     )
 }
 
-export default page
+export default Page

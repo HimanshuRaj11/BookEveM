@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button } from './ui/button';
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export default function RegisterForm({ setIsRegister }: { setIsRegister: any }) {
     const initialInputData = {
         name: '',
@@ -33,7 +33,7 @@ export default function RegisterForm({ setIsRegister }: { setIsRegister: any }) 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(`http://localhost:3000/api/v1/auth/register`, { InputData })
+            const { data } = await axios.post(`${baseUrl}/api/v1/auth/register`, { InputData })
             if (data.success) {
                 setInputData(initialInputData);
             }

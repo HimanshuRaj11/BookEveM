@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios';
 import React, { useState } from 'react';
-
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const LoginForm = ({ setIsRegister }: { setIsRegister: any }) => {
 
     const initialInputData = {
@@ -19,7 +19,7 @@ const LoginForm = ({ setIsRegister }: { setIsRegister: any }) => {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post(`http://localhost:3000/api/v1/auth/login`, { InputData })
+            const { data } = await axios.post(`${baseUrl}/api/v1/auth/login`, { InputData })
             console.log(data);
 
             if (data.success) {
