@@ -1,9 +1,11 @@
 "use client"
 import axios from 'axios';
+import { useRouter } from "next/navigation"
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 const LoginForm = ({ setIsRegister }: { setIsRegister: any }) => {
-
+    const router = useRouter()
     const initialInputData = {
         email: "",
         password: ""
@@ -20,9 +22,10 @@ const LoginForm = ({ setIsRegister }: { setIsRegister: any }) => {
 
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/auth/login`, { InputData })
-            console.log(data);
 
             if (data.success) {
+                router.push('/')
+                toast.success(data.message)
                 setInputData(initialInputData);
             }
             return;

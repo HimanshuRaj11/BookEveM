@@ -2,6 +2,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button } from './ui/button';
+import { useRouter } from "next/navigation"
+import { toast } from 'react-toastify';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export default function RegisterForm({ setIsRegister }: { setIsRegister: any }) {
     const initialInputData = {
@@ -30,11 +32,14 @@ export default function RegisterForm({ setIsRegister }: { setIsRegister: any }) 
 
     //     }
     // };
+    const router = useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const { data } = await axios.post(`${baseUrl}/api/v1/auth/register`, { InputData })
             if (data.success) {
+                router.push('/')
+                toast.success(data.message)
                 setInputData(initialInputData);
             }
         } catch (error) {
